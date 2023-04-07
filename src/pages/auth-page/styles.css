@@ -1,0 +1,26 @@
+.innerContainer {
+    background-color: #fff;
+    border: 2px solid #343434;
+    border-radius: 8px;
+    position: relative;
+    top: -50px;
+    opacity: 0;
+} 
+
+.innerContainer.animate {
+    top:0;
+    opacity: 1;
+    transition: all .7s ease-in;
+}
+
+.trigger {
+    cursor: pointer;
+    font-weight: bolder;
+    color: #3022f6;
+    border-bottom: 1px solid #3022f6;
+}
+
+.trigger:hover {
+    color: #291eb6;
+    border-bottom-color: #291eb6;
+}

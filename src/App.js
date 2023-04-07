@@ -1,24 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import AuthContextProvider, { AuthContext } from "./context/auth/AuthContext";
+import MainPage from "./pages/main-page/MainPage";
+import "./App.css";
+
+import { AdminRouter, UserRouter } from "./routes";
+import { useContext } from "react";
+import AdminContextProvider from "./context/admin/AdminContext";
+
+const userRouter = createBrowserRouter([
+  {
+    path: "*",
+    element: <MainPage />,
+    children: UserRouter,
+  },
+]);
+
+const adminRouter = createBrowserRouter([
+  {
+    path: "*",
+    element: <MainPage />,
+    children: AdminRouter,
+  },
+]);
+
+function Router() {
+  const { user } = useContext(AuthContext);
+
+  if (user?.role === "admin") {
+    return (
+      <AdminContextProvider>
+        <RouterProvider router={adminRouter} />
+      </AdminContextProvider>
+    );
+  }
+
+  return <RouterProvider router={userRouter} />;
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthContextProvider>
+      <Router />
+    </AuthContextProvider>
   );
 }
 

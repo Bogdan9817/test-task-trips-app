@@ -1,0 +1,14 @@
+.user-card-data {
+    padding: 8px;
+    margin: 4;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-bottom: 1px solid #343434;
+}
+
+.alert-message-container {
+    position: fixed;
+    top:14px;
+    right: 14px;
+}
