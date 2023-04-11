@@ -1,16 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Alert } from "bootstrap-4-react";
 import "./styles.css";
 
 export default function AlertMessage(props) {
-  const { message, delay, type } = props;
+  const { message, type } = props;
   const [hidden, setHidden] = useState(true);
-
+  let timer = useRef();
   useEffect(() => {
+    clearTimeout(timer.current);
     setHidden(false);
-    setTimeout(() => {
+    timer.current = setTimeout(() => {
       setHidden(true);
-    }, delay || 3000);
+    }, 3000);
   }, [message]);
   if (!props) return;
 

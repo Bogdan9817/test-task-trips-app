@@ -1,16 +1,26 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import AuthContextProvider, { AuthContext } from "./context/auth/AuthContext";
-import MainPage from "./pages/main-page/MainPage";
-import "./App.css";
-
-import { AdminRouter, UserRouter } from "./routes";
 import { useContext } from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+import GlobalContextProvider, {
+  GlobalContext,
+} from "./context/global/GlobalContext";
 import AdminContextProvider from "./context/admin/AdminContext";
+import UserContextProvider from "./context/user/UserContext";
+
+import { AdminRouter, UserRouter } from "./routes/routes";
+
+import MainPage from "./pages/main-page/MainPage";
+
+import "./App.css";
+import ErrorAlert from "./components/main/ErrorAlert";
+import SuccessAlert from "./components/main/SuccessAlert";
+import ErrorPage from "./pages/error-page/ErrorPage";
 
 const userRouter = createBrowserRouter([
   {
-    path: "*",
+    path: "/",
     element: <MainPage />,
+    errorElement: <ErrorPage />,
     children: UserRouter,
   },
 ]);
@@ -19,29 +29,40 @@ const adminRouter = createBrowserRouter([
   {
     path: "*",
     element: <MainPage />,
+    errorElement: <ErrorPage />,
     children: AdminRouter,
   },
 ]);
 
 function Router() {
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(GlobalContext);
 
   if (user?.role === "admin") {
     return (
       <AdminContextProvider>
-        <RouterProvider router={adminRouter} />
+        <UserContextProvider>
+          <RouterProvider router={adminRouter} />
+          <ErrorAlert />
+          <SuccessAlert />
+        </UserContextProvider>
       </AdminContextProvider>
     );
   }
 
-  return <RouterProvider router={userRouter} />;
+  return (
+    <UserContextProvider>
+      <RouterProvider router={userRouter} />
+      <ErrorAlert />
+      <SuccessAlert />
+    </UserContextProvider>
+  );
 }
 
 function App() {
   return (
-    <AuthContextProvider>
+    <GlobalContextProvider>
       <Router />
-    </AuthContextProvider>
+    </GlobalContextProvider>
   );
 }
 

@@ -1,0 +1,43 @@
+{
+    "login": {
+        "loginBtn":"Ввійти",
+        "success": {
+            "welcome":"Вітаємо!"
+        },
+        "errors": {
+            "wrongPass": {
+                "check": "auth/wrong-password",
+                "error": "Невірний пароль"
+            },
+            "userNotFound": {
+                "check": "auth/user-not-found",
+               "error": "Невідомий користувач"
+            },
+            "others": "Щось пішло не так... Спробуйте пізніше."
+        }
+    },
+    "signIn": {
+        "signInBtn": "Зареєструватися",
+        "success":{
+            "registered": "Користувач зареєстрований!"
+        },
+        "errors":{
+            "userExists": {
+                "check": "auth/email-already-in-use",
+                "error": "Користувач з таким імейлом вже існує"
+            },
+            "others": "Щось пішло не так... Спробуйте пізніше."
+        }
+    },
+    "validateSignIn": {
+        "fillField": "Заповніть поле -",
+        "incorrectEmail": "Email у невірному форматі",
+        "passNotEqual":"Паролі не співпадають",
+        "weakPass":"Слабкий пароль",
+        "incorrectAge":"Невірний вік"
+    },
+    "validateLogin": {
+        "fillField": "Заповніть поле -",
+        "incorrectEmail":"Email у невірному форматі"
+    }
+}

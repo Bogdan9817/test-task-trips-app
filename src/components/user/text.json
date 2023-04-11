@@ -1,0 +1,34 @@
+{
+    "driverCar": {
+        "saveCarBtn": "Зберегти",
+        "heading": "Моє авто",
+        "alert":"Будь ласка вкажіть Ваше авто",
+        "success": {
+            "carAdded": "Машину додано"
+        },
+        "errors": {
+            "others":"Щось пішло не так... спробуйте пізніше"
+        }
+    },
+    "driverInformation": {
+        "heading": "Мої поїздки"
+    },
+    "userInformation": {
+        "saveUserInfoBtn": "Зберегти",
+        "success": {
+            "infoUpdated": "Інформація оновлена!"
+        },
+        "errors": {
+            "others":"Щось пішло не так... спробуйте пізніше"
+        }
+    },
+
+    "validateUserInfo": {
+        "nothingToUpdate": "Нічого зберігати",
+        "wrongAge": "Невірне значення віку",
+        "wrongNumber":"Невірне значення номера"
+    },
+    "validateCar": {
+        "fillAllField": "Заповніть всі поля!"
+    }
+}

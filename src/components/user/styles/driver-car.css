@@ -1,0 +1,8 @@
+.driver-car-heading {
+    display: flex;
+    justify-content: space-between;
+}
+
+.driver-car-heading-text {
+    margin-bottom: 0;
+}

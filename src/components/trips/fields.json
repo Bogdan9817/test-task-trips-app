@@ -1,0 +1,48 @@
+{
+    "tripForm": [{
+        "value":"from",
+        "label":"Подорож з:",
+        "type":"text",
+        "id":"tripForm-from-field"
+    },
+    {
+        "value":"to",
+        "label":"Подорож до:",
+        "type":"text",
+        "id":"tripForm-to-field"
+    },
+    {
+        "value":"passengerLimit",
+        "label":"Кількість місць:",
+        "type":"number",
+        "subType":"default",
+        "id":"tripForm-passengeerLimit-field"
+    },
+    {
+        "value":"timeFrom",
+        "label":"Час з:",
+        "type":"date",
+        "id":"tripForm-time-from-field"
+    },
+    {
+        "value":"timeTo",
+        "label":"Час до:",
+        "type":"date",
+        "id":"tripForm-time-to-field"
+    },
+    {
+        "value":"driver",
+        "label":"Водій:",
+        "type":"selector",
+        "valuesStore":"drivers",
+        "id":"tripForm-driver-field"
+    },
+    {
+        "value":"price",
+        "label":"Ціна:",
+        "type":"number",
+        "subType":"default",
+        "id":"tripForm-price-field"
+    }
+]
+}

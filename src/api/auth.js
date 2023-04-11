@@ -3,67 +3,61 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import { authorization, database, providers } from "./firebase";
+import { authorization as auth, database, providers } from "./firebase";
 import { set, ref, get } from "firebase/database";
 
 export const registerUserViaEmailAndPassword = async (userData, setUser) => {
-  const creds = await createUserWithEmailAndPassword(
-    authorization,
-    userData.email,
-    userData.password
-  );
-  const userDataObj = {
-    name: userData.name,
-    email: userData.email,
-    age: userData.age,
-    role: "passenger",
-    uid: creds.user.uid,
-  };
+  const { email, password, name } = userData;
+  const creds = await createUserWithEmailAndPassword(auth, email, password);
+  const role = "passenger";
+  const uid = creds.user.uid;
+  const userDataObj = { name, email, role, uid };
   await createUser(userDataObj);
-  const user = await getUser(userDataObj.uid);
-  setUser(user);
+  setUser({ uid, role });
 };
 
 export const loginWithEmailAndPassword = async (email, password, setUser) => {
-  const creds = await signInWithEmailAndPassword(
-    authorization,
-    email,
-    password
-  );
-  const user = await getUser(creds.user.uid);
-  setUser(user);
+  const creds = await signInWithEmailAndPassword(auth, email, password);
+  const role = await getUserRole(creds.user.uid);
+  setUser({ role, uid: creds.user.uid });
 };
 
 const createUser = async (userDataObj) => {
   await set(ref(database, "/users/" + userDataObj.uid), userDataObj);
 };
 
-const getUser = async (uid) => {
-  const data = (await get(ref(database, "/users/" + uid))).val();
-  return data;
+const getUserRole = async (uid) => {
+  return (await get(ref(database, "/users/" + uid + "/role"))).val();
 };
 
 const signInWithProvider = async (provider) => {
-  return await signInWithPopup(authorization, provider);
+  return await signInWithPopup(auth, provider);
+};
+
+const signInWithProviderHelper = async (creds, setUser) => {
+  const { displayName, email, uid } = creds.user;
+  const role = await getUserRole(uid);
+  if (!!role) {
+    return setUser({ uid, role });
+  }
+  const userDataObj = {
+    name: displayName,
+    role: "passenger",
+    uid,
+    email,
+  };
+  await createUser(userDataObj);
+  const userRole = await getUserRole(uid);
+  setUser({ uid, role: userRole });
 };
 
 export const signInWithGoogle = async (setUser) => {
   const creds = await signInWithProvider(providers.google);
-  const userDataObj = {
-    name: creds.user.displayName,
-    email: creds.user.email,
-    uid: creds.user.uid,
-    role: "passenger",
-  };
-  const userExists = await getUser(userDataObj.uid);
-  if (userExists) {
-    setUser(userExists);
-    return;
-  }
-  await createUser(userDataObj);
-  const user = await getUser(userDataObj.uid);
-  setUser(user);
+  await signInWithProviderHelper(creds, setUser);
 };
-export const signInWithFacebook = (setUser) => {
-  return signInWithProvider(providers.facebook);
+
+export const signInWithFacebook = async (setUser) => {
+  const creds = await signInWithProvider(providers.facebook);
+  console.log(creds);
+  await signInWithProviderHelper(creds, setUser);
 };

@@ -1,4 +1,4 @@
-import { createContext, useReducer, useState } from "react";
+import { createContext, useReducer } from "react";
 import { reducer } from "./reducer";
 
 export const AdminContext = createContext();

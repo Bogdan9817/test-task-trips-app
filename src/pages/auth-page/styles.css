@@ -1,13 +1,27 @@
-.innerContainer {
+
+.auth-container {
     background-color: #fff;
     border: 2px solid #343434;
     border-radius: 8px;
     position: relative;
     top: -50px;
     opacity: 0;
+    width: 100%;
 } 
 
-.innerContainer.animate {
+.auth-heading {
+    margin-top: 8px;
+    text-align: center;
+}
+
+@media screen and (min-width:768px) {
+    .auth-container {
+        width: 50%;
+        margin: auto;
+    }
+}
+
+.auth-container.animate {
     top:0;
     opacity: 1;
     transition: all .7s ease-in;

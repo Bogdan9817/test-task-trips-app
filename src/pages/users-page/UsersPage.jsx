@@ -1,8 +1,13 @@
 import { useContext, useEffect, useState, useCallback } from "react";
+
 import { getUsers } from "../../api/admin";
-import { Display3 } from "bootstrap-4-react/lib/components/Display";
-import UsersList from "../../components/users/UsersList";
+
 import { AdminContext } from "../../context/admin/AdminContext";
+
+import UsersList from "../../components/users/UsersList";
+
+import text from "./text.json";
+import Loader from "../../UI/loader/Loader";
 
 export default function UsersPage() {
   const [load, setLoad] = useState(false);
@@ -30,16 +35,18 @@ export default function UsersPage() {
   }, [loadUsers, state.users.length]);
 
   if (load) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <span>{text.errorHandler}</span>;
   }
 
   return (
     <div className='content-wrapper'>
-      <Display3>Users</Display3>
+      <div className='heading'>
+        <h2>{text.heading}</h2>
+      </div>
       <UsersList />
     </div>
   );

@@ -1,27 +1,30 @@
-import { Form, Container } from "bootstrap-4-react";
 import { useContext, useState } from "react";
+import { Form, Container, Button } from "bootstrap-4-react";
 import { FaGoogle, FaFacebookF } from "react-icons/fa";
-import { createPortal } from "react-dom";
 
 import {
   loginWithEmailAndPassword,
   signInWithFacebook,
   signInWithGoogle,
 } from "../../api/auth";
-import { Button } from "bootstrap-4-react/lib/components";
-import { AuthContext } from "../../context/auth/AuthContext";
-import ValidateLogin from "./validate";
-import ValidationErrors from "./ValidationErrors";
+
+import { ValidateLogin } from "./validate";
+
+import { GlobalContext } from "../../context/global/GlobalContext";
+
+import FormFieldInput from "../../UI/form-field-input/FormFieldInput";
+
+import fields from "./fields.json";
+import text from "./text.json";
 
 export default function LoginForm() {
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
   });
-  const { setUser } = useContext(AuthContext);
-  const [errors, setErrors] = useState([]);
-  const [hidden, setHidden] = useState(true);
-
+  const { setUser, setErrors, setSuccessMsg } = useContext(GlobalContext);
+  const { wrongPass, userNotFound, others } = text.login.errors;
+  const { welcome } = text.login.success;
   const handleChange = (e) => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
   };
@@ -32,49 +35,37 @@ export default function LoginForm() {
       const res = await ValidateLogin(userInfo);
       try {
         await loginWithEmailAndPassword(res.email, res.password, setUser);
-      } catch (e) {
-        console.log(e);
+        setSuccessMsg(welcome);
+      } catch (error) {
+        const { code } = error;
+        if (code === wrongPass.check) return setErrors([wrongPass.error]);
+        if (code === userNotFound.check) return setErrors([userNotFound.error]);
+        return setErrors([others]);
       }
     } catch (err) {
       setErrors(err);
-      setTimeout(() => {
-        setErrors([]);
-      }, 5000);
     }
   };
 
   const handleSignIn = async (fn) => {
     try {
       await fn(setUser);
+      setSuccessMsg(welcome);
     } catch (e) {
-      // setErrors([e.message]);
+      setErrors([others]);
     }
   };
 
   return (
     <>
       <Form p='4' display='flex' flex='column' justifyContent='flex-end'>
-        <Form.Group mb='3'>
-          <label htmlFor='signin-email-input'> Введіть email</label>
-          <Form.Input
-            onChange={handleChange}
-            id='signin-email-input'
-            type='email'
-            name='email'
-          />
-        </Form.Group>
-        <Form.Group mb='3'>
-          <label htmlFor='signin-password-input'>Введіть пароль</label>
-          <Form.Input
-            onChange={handleChange}
-            id='signin-password-input'
-            autoComplete='false'
-            type='password'
-            name='password'
-          />
-        </Form.Group>
+        {fields.logIn.map((field) => {
+          return (
+            <FormFieldInput key={field.id} onChange={handleChange} {...field} />
+          );
+        })}
         <Button dark size='lg' onClick={handleLogin}>
-          Login
+          {text.login.loginBtn}
         </Button>
       </Form>
       <Container display='flex' flex='row' justifyContent='center' pt='2'>
@@ -89,7 +80,6 @@ export default function LoginForm() {
           onClick={() => handleSignIn(signInWithGoogle)}
         />
       </Container>
-      <ValidationErrors errors={errors} />
     </>
   );
 }

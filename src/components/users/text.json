@@ -1,0 +1,18 @@
+{
+    "userCard": {
+        "updateRoleBtn":"Оновити",
+        "deleteUserBtn": "Видалити користувача",
+        "selectorValues": [
+         { "label": "пассажир", "value": "passenger" },
+         { "label": "водій", "value": "driver" },
+         { "label": "диспетчер", "value": "dispatcher" }
+        ],
+        "success": {
+            "roleUpdated": "Оновлена роль користувача -",
+            "userDeleted": "Користувача видалено"
+        },
+        "errors": {
+            "others": "Щось пішло не так... Спробуйте пізніше"
+        }
+    }
+}

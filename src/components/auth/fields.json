@@ -1,0 +1,40 @@
+{
+    "signIn": [
+        {
+            "value":"name",
+            "label":"Введіть ім'я",
+            "type":"text",
+            "id":"signIn-name-field"
+        },
+        {
+            "value":"email",
+            "label":"Введіть email",
+            "type":"text",
+            "id":"signIn-email-field"
+        },
+        {
+            "value":"password",
+            "label":"Введіть пароль",
+            "type":"password",
+            "id":"signIn-password-field"
+        },
+        {
+            "value":"confirmPassword",
+            "label":"Повторіть пароль",
+            "type": "password",
+            "id":"signIn-confirmPassword-field"
+        }
+    ],
+    "logIn": [{
+        "value":"email",
+        "label":"Введіть email",
+        "type":"text",
+        "id":"login-email-field"
+    },
+    {
+        "value":"password",
+        "label":"Введіть пароль",
+        "type":"password",
+        "id":"login-password-field"
+    }]
+}

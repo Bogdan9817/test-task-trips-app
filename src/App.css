@@ -10,13 +10,39 @@
 
 .main-page {
   display: flex;
+  flex-direction: column;
   padding: 0;
   margin: 0;
 }
 
 .content-wrapper {
-   padding: 16px;
-   width: 100%;
-   min-height: 100vh;
-   height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  margin: 44px 0;
 }
+
+.heading {
+  max-width: 320px;
+}
+
+
+
+@media screen and (min-width:768px){
+  .main-page {
+    flex-direction: row;
+  }
+
+  .content-wrapper {
+    padding: 16px;
+    margin: auto;
+ }
+ .heading {
+  max-width: auto;
+ }
+}
+
+
+
+
+

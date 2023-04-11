@@ -1,27 +1,21 @@
-export async function ValidateSignIn(userInfo) {
+import text from "./text.json";
+
+export const ValidateSignIn = async (userInfo) => {
+  const { fillField, incorrectEmail, passNotEqual, weakPass, incorrectAge } =
+    text.validateSignIn;
   return new Promise((resolve, reject) => {
     const errors = [];
     for (let key in userInfo) {
-      !userInfo[key] && errors.push(`Fill the ${key} field`);
+      !userInfo[key] && errors.push(fillField + " " + key);
     }
     if (!userInfo.email.match(/(\w|\d)+@\w+\.\w{2,3}/)) {
-      errors.push("Email is not correct");
+      errors.push(incorrectEmail);
     }
     if (userInfo.password !== userInfo.confirmPassword) {
-      errors.push("Passwords is not equal");
+      errors.push(passNotEqual);
     }
-
-    if (userInfo.password.length < 8) {
-      errors.push("Your password is too weak, make more/equal 8 chars");
-    }
-
-    if (userInfo.age < 18) {
-      errors.push("Is not adult");
-    }
-    if (userInfo.age > 100) {
-      errors.push("Incorrect age");
-    }
-
+    if (userInfo.password.length < 8) errors.push(weakPass);
+    if (userInfo.age > 100) errors.push(incorrectAge);
     if (errors.length > 0) {
       reject(errors);
     } else {
@@ -33,16 +27,17 @@ export async function ValidateSignIn(userInfo) {
       });
     }
   });
-}
+};
 
-export default async function ValidateLogin(userInfo) {
+export const ValidateLogin = async (userInfo) => {
+  const { fillField, incorrectEmail } = text.validateLogin;
   return new Promise((resolve, reject) => {
     const errors = [];
     for (let key in userInfo) {
-      !userInfo[key] && errors.push(`Fill the ${key} field`);
+      !userInfo[key] && errors.push(fillField + " " + key);
     }
     if (!userInfo.email.match(/(\w|\d)+@\w+\.\w{2,3}/)) {
-      errors.push("Email is not correct");
+      errors.push(incorrectEmail);
     }
     if (errors.length > 0) {
       reject(errors);
@@ -50,4 +45,4 @@ export default async function ValidateLogin(userInfo) {
       resolve(userInfo);
     }
   });
-}
+};

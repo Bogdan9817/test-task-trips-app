@@ -12,3 +12,8 @@
     top:14px;
     right: 14px;
 }
+
+.btns-container {
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,7 +1,0 @@
-.validation-error-container {
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    top: 14px;
-    right: 14px;
-}
